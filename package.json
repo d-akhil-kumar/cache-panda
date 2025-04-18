@@ -1,0 +1,69 @@
+{
+  "name": "cache-panda",
+  "version": "1.0.0",
+  "description": "🐼 A flexible, decorator-based smart cache module for NestJS with TTL, key prefixing, and conditional caching based on method execution time.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "nestjs",
+    "decorator",
+    "typescript",
+    "cache",
+    "cache-manager",
+    "lazy-cache",
+    "ttl",
+    "smart-cache",
+    "performance-cache",
+    "execution-time-cache",
+    "method-cache",
+    "prefix-cache",
+    "conditional-cache",
+    "async-cache",
+    "cache-wrapper",
+    "nestjs-cache",
+    "panda"
+  ],
+  "author": "Akhil Kumar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d-akhil-kumar/cache-panda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/d-akhil-kumar/cache-panda/issues"
+  },
+  "homepage": "https://github.com/d-akhil-kumar/cache-panda#readme",
+  "peerDependencies": {
+    "@nestjs/cache-manager": "^2.2.2",
+    "@nestjs/common": "^10.2.6",
+    "@nestjs/core": "^10.2.6",
+    "cache-manager": "^5.7.6"
+  },
+  "dependencies": {
+    "xxhashjs": "^0.2.2"
+  },
+  "devDependencies": {
+    "@types/xxhashjs": "^0.2.4",
+    "typescript": "^4.9.5"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=7"
+  }
+}
