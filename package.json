@@ -1,6 +1,6 @@
 {
   "name": "cache-panda",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "🐼 A flexible, decorator-based smart cache module for NestJS with TTL, key prefixing, and conditional caching based on method execution time.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
