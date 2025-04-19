@@ -21,18 +21,7 @@ export function CachePandaSet(cacheOptions: CacheOptions) {
         executionTimeLimit = 0,
       } = cacheOptions;
 
-      const self = this as { cachePandaService?: CachePandaService };
-      const cachePandaService = self.cachePandaService;
-
-      if (
-        !cachePandaService ||
-        typeof cachePandaService.getCache !== "function" ||
-        typeof cachePandaService.setCache !== "function"
-      ) {
-        throw new Error(
-          "[cache-panda] Missing or invalid cachePandaService. Please ensure CachePanda.register() was used and CachePandaService is injected."
-        );
-      }
+      const cachePandaService = CachePandaService.getInstance();
 
       const argsKey = reduceArgsArrayToString(args, argsIndex, "_");
       const hash = XXH.h32(
@@ -40,7 +29,8 @@ export function CachePandaSet(cacheOptions: CacheOptions) {
         CACHE_KEY_HASH_SEED
       ).toString();
 
-      const cacheKey = `${prefix}${argsKey}:${name}:${hash}`;
+      const keyParts = [prefix, name, argsKey, hash].filter(Boolean);
+      const cacheKey = keyParts.join(":");
 
       const cachedResult = await cachePandaService.getCache(cacheKey);
       if (cachedResult) return JSON.parse(cachedResult as string);

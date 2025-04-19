@@ -1,19 +1,23 @@
-import { Injectable, Inject, Logger, Optional } from "@nestjs/common";
+import { Injectable, Inject, Logger } from "@nestjs/common";
 import { Cache } from "cache-manager";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 
 @Injectable()
 export class CachePandaService {
   private readonly logger = new Logger(CachePandaService.name);
+  private static instance: CachePandaService;
 
-  constructor(
-    @Optional() @Inject(CACHE_MANAGER) private readonly cacheManager: Cache
-  ) {
-    if (!cacheManager) {
+  constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {
+    CachePandaService.instance = this;
+  }
+
+  static getInstance(): CachePandaService {
+    if (!CachePandaService.instance) {
       throw new Error(
-        "[cache-panda] CACHE_MANAGER is not provided. Please ensure CachePandaModule is registered correctly."
+        "[cache-panda] CachePandaService not initialized. Ensure CachePanda.register() is added to your module."
       );
     }
+    return CachePandaService.instance;
   }
 
   async getCache<T = any>(key: string): Promise<T | undefined> {
@@ -21,8 +25,8 @@ export class CachePandaService {
   }
 
   async setCache(key: string, value: string, ttl?: number): Promise<void> {
-    const effectiveTtl = ttl ?? this.getDefaultTtl();
-    return await this.cacheManager.set(key, value, effectiveTtl);
+    if (!ttl) return await this.cacheManager.set(key, value);
+    return await this.cacheManager.set(key, value, ttl);
   }
 
   async deleteCache(key: string): Promise<void> {
@@ -54,10 +58,5 @@ export class CachePandaService {
   async deleteCacheByKeyPattern(pattern: string): Promise<void> {
     const keys = await this.getKeysByKeyPattern(pattern);
     await Promise.all(keys.map((key) => this.deleteCache(key)));
-  }
-
-  private getDefaultTtl(): number {
-    // @ts-ignore: Access to internal property (works with memory store, redis etc.)
-    return this.cacheManager?.options?.ttl ?? 0;
   }
 }

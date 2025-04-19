@@ -2,11 +2,10 @@
 
 A smart, flexible cache module for **NestJS** 🐼 that wraps `@nestjs/cache-manager` and introduces a flexible ` @CachePandaSet` decorator for conditional, granular, and performance-aware caching.
 
-##
-##
+
 
 ---
-#
+
 
 ## 🚀 Features
 
@@ -17,13 +16,12 @@ A smart, flexible cache module for **NestJS** 🐼 that wraps `@nestjs/cache-man
 - 🧩 Plugs into Redis, memory store, or any cache-manager compatible store
 - 🛠️ Easy to use, fully typed, developer-friendly
 
-##
-##
+
 ---
 
-#
+
 ## 📦 Installation
-##
+
 ```bash
 npm install cache-panda
 ```
@@ -33,13 +31,12 @@ Also install peer dependencies (if not already):
 ```bash
 npm install @nestjs/cache-manager cache-manager
 ```
-##
-##
+
 
 ---
 
 ## 🔧 Setup
-##
+
 ### Register the module in your NestJS app:
 
 ```ts
@@ -58,12 +55,11 @@ import { CachePanda } from 'cache-panda';
 })
 export class AppModule {}
 ```
-##
-##
+
 ---
 
 ## 🧠 Usage
-#
+
 ### Decorate your methods using `@CachePandaSet()`:
 
 ```ts
@@ -86,27 +82,24 @@ export class MyService {
   }
 }
 ```
-##
-##
+
 ---
 
 ## 🔍 `@CachePandaSet` Options
-##
-##
+
 | Option                | Type       | Description                                                         |
 |-----------------------|------------|---------------------------------------------------------------------|
 | `prefix`              | `string`   | Key prefix to categorize/group caches                               |
-| `name`                | `string`   | Logical name for the method being cached                            |
+| `name?`                | `string`   | Logical name for the method being cached                            |
 | `ttl?`                | `number`   | Optional override for TTL (in ms)                                   |
 | `argsIndex?`          | `number[]` | Pick specific method arguments to build the cache key               |
 | `executionTimeLimit?` | `number`   | Only cache if method takes more than this number of ms              |
 
-##
-##
+
 ---
 
 ## 🧼 Manual Cache Usage
-##
+
 ```ts
 await this.cachingService.setCache('some-key', JSON.stringify(data), 60);
 const result = await this.cachingService.getCache('some-key');
@@ -122,8 +115,7 @@ await this.cachingService.deleteCacheByKeys(['key1', 'key2']);
 await this.cachingService.deleteCacheByKeyPattern('user:');
 const keys = await this.cachingService.getKeysByKeyPattern('user:');
 ```
-##
-##
+
 ---
 
 ## 📈 Roadmap
@@ -135,8 +127,7 @@ const keys = await this.cachingService.getKeysByKeyPattern('user:');
 - [ ] Auto-Invalidation (Cache Busting) decorator
 - [ ] CLI tool to inspect and manage cache keys
 
-##
-##
+
 ---
 
 ## 🛠 Contributing
@@ -149,8 +140,7 @@ Contributions are welcome! Open an issue or PR.
 3. Commit your changes (`git commit -am 'feat: add amazing thing'`)
 4. Push to the branch (`git push origin feat/your-feature`)
 5. Create a new Pull Request!
-##
-##
+
 ---
 
 ## 📜 License
@@ -158,6 +148,3 @@ Contributions are welcome! Open an issue or PR.
 MIT © [Akhil Kumar](https://github.com/d-akhil-kumar)
 
 > Designed with ❤️ to make NestJS caching smarter, cleaner, and panda-fied.
-
-##
-##
