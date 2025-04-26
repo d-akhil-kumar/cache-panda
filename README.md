@@ -5,21 +5,6 @@ A smart, flexible cache module for **NestJS** 🐼 that wraps `@nestjs/cache-man
 
 
 ---
-
-
-## 🚀 Features
-
-- ✅ **Drop-in replacement** for `@nestjs/cache-manager`
-- 🧠 Decorator-based `@CachePandaSet()` for elegant method-level caching
-- ⏱️ **Conditional caching** based on method execution time
-- 🔑 Custom cache key building with prefixes and argument targeting
-- 🧩 Plugs into Redis, memory store, or any cache-manager compatible store
-- 🛠️ Easy to use, fully typed, developer-friendly
-
-
----
-
-
 ## 📦 Installation
 
 ```bash
@@ -34,6 +19,19 @@ npm install @nestjs/cache-manager cache-manager
 
 
 ---
+
+## 🚀 Features
+
+- ✅ **Drop-in replacement** for `@nestjs/cache-manager`
+- 🧠 Decorator-based `@CachePandaSet()` for elegant method-level caching
+- ⏱️ **Conditional caching** based on method execution time
+- 🔑 Custom cache key building with prefixes and argument targeting
+- 🧩 Plugs into Redis, memory store, or any cache-manager compatible store
+- 🛠️ Easy to use, fully typed, developer-friendly
+
+
+---
+
 
 ## 🔧 Setup
 
@@ -64,12 +62,10 @@ export class AppModule {}
 
 ```ts
 import { Injectable } from '@nestjs/common';
-import { CachePandaSet, CachingService } from 'cache-panda';
+import { CachePandaSet } from 'cache-panda';
 
 @Injectable()
 export class MyService {
-  constructor(public cachingService: CachingService) {}
-
   @CachePandaSet({
     prefix: 'user:',
     name: 'get-profile',
@@ -98,6 +94,40 @@ export class MyService {
 
 ---
 
+## 🔧 Redis Setup
+
+Also install peer dependencies (if not already):
+```bash
+npm install cache-manager-redis-yet
+```
+
+### Register the module in your NestJS app:
+
+```ts
+// app.module.ts
+
+import { CachePanda } from 'cache-panda';
+import { redisStore } from 'cache-manager-redis-yet';
+
+@Module({
+  imports: [
+    CachePanda.registerAsync({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: await redisStore({
+          url: 'redis://localhost:6379',
+        }),
+        ttl: 1000,  // Default TTL for all cache entries in ms
+        max: 100,  // Max items to keep in memory
+      }),
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+
+
 ## 🧼 Manual Cache Usage
 
 ```ts
@@ -122,9 +152,9 @@ const keys = await this.cachingService.getKeysByKeyPattern('user:');
 
 - [x] Initial release with decorator + service
 - [x] TTL and execution-time-based conditional caching
-- [ ] Redis and multi-store setup guide
-- [ ] Logging and debug mode support (cache hit vs miss)
+- [x] Redis and multi-store setup guide
 - [ ] Auto-Invalidation (Cache Busting) decorator
+- [ ] Logging and debug mode support (cache hit vs miss)
 - [ ] CLI tool to inspect and manage cache keys
 
 
