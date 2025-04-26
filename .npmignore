@@ -5,4 +5,7 @@ README.template.md
 *.log
 *.test.ts
 .gitignore
-
+*.spec.ts
+coverage
+test/
+jest.config.js
