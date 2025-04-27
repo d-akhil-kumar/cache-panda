@@ -9,3 +9,5 @@ README.template.md
 coverage
 test/
 jest.config.js
+assets/
+examples/

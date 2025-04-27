@@ -156,6 +156,7 @@ const keys = await this.cachingService.getKeysByKeyPattern('user:');
 - [ ] Auto-Invalidation (Cache Busting) decorator
 - [ ] Logging and debug mode support (cache hit vs miss)
 - [ ] CLI tool to inspect and manage cache keys
+- [ ] 100% test cases coverage 
 
 
 ---

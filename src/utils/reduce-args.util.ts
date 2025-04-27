@@ -3,11 +3,13 @@ export function reduceArgsArrayToString(
   argsIndex: number[] = [],
   separator = "_"
 ): string {
-  if (!args || args.length === 0) return "";
+  if (!argsIndex || argsIndex.length === 0) return "";
 
-  const selectedArgs = argsIndex.length
-    ? argsIndex.map((index) => JSON.stringify(args[index])).filter(Boolean)
-    : args.map((arg) => JSON.stringify(arg));
-
-  return selectedArgs.join(separator);
+  return argsIndex
+    .map((index) => {
+      const value = args[index];
+      return value !== undefined && value !== null ? String(value) : "";
+    })
+    .filter((val) => val !== "")
+    .join(separator);
 }
